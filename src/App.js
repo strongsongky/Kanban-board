@@ -1,4 +1,5 @@
 import React from "react";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import "./App.css";
 
 const initialData = {
@@ -36,7 +37,7 @@ const initialData = {
 const App = () => {
   return (
     <div className="kanban-container">
-      <h1 className="kanban-title">To-do List</h1>
+      <h1 className="kanban-title">To-do List ✅</h1>
       <div className="kanban-board">
         {initialData.columnOrder.map((columnId) => {
           const column = initialData.columns[columnId];
@@ -45,11 +46,24 @@ const App = () => {
           );
 
           return (
-            <div className="kanban-column" key={column.id}>
+            <div
+              className={`kanban-column ${column.title
+                .toLowerCase()
+                .replace(" ", "-")}`}
+              key={column.id}
+            >
               <h2>{column.title}</h2>
               {tasks.map((task) => (
                 <div className="kanban-card" key={task.id}>
                   {task.content}
+                  <div className="card-buttons">
+                    <button className="edit-button">
+                      <FaEdit />
+                    </button>
+                    <button className="delete-button">
+                      <FaTrash />
+                    </button>
+                  </div>
                 </div>
               ))}
               {column.id === "column-1" && (
