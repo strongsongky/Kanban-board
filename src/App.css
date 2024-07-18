@@ -176,7 +176,7 @@ body {
   .kanban-card {
     margin: 5px 0;
     padding: 8px;
-    height: 20px;
+    height: 16px;
     font-size: 12px;
   }
 
@@ -188,8 +188,9 @@ body {
   .edit-button,
   .delete-button {
     padding: 3px 5px;
-    font-size: 10px;
-    height: 20px;
+    font-size: 8px;
+    height: 16px;
+    margin-right: -4px;
   }
 
   .add-task-button {
