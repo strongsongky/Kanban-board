@@ -54,11 +54,12 @@ body {
   background-color: #fff;
   border-radius: 4px;
   padding: 10px;
-  margin: 0px 10px 10px;
+  margin: 0px 10px 15px;
   box-shadow: 0 5px 0 rgba(137, 126, 126, 0.25);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: black;
 }
 
 .card-buttons {
@@ -125,7 +126,7 @@ body {
   font-size: 40px;
   cursor: pointer;
   text-align: center;
-  bottom: 30px;
+  bottom: 24px;
 }
 
 .add-task input {
@@ -137,11 +138,11 @@ body {
   .kanban-column {
     width: 30%;
     margin-bottom: 15px;
-    min-height: 300px;
+    min-height: 320px;
   }
 
   .kanban-card {
-    margin: 5px 0;
+    margin: 12px 0;
     padding: 8px;
     height: 24px;
     font-size: 14px;
@@ -154,9 +155,10 @@ body {
 
   .edit-button,
   .delete-button {
-    padding: 4px 8px;
-    font-size: 12px;
-    height: 25px;
+    padding: 1px 7px;
+    font-size: 10px;
+    height: 23px;
+    margin-right: -3px;
   }
 
   .add-task-button {
