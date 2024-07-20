@@ -35,9 +35,11 @@ body {
   border-radius: 10px;
   width: 23%;
   padding: 10px;
+  padding-bottom: 80px;
   box-sizing: border-box;
   margin-right: 15px;
-  min-height: 350px;
+  min-height: 400px;
+  position: relative;
 }
 
 .kanban-column:last-child {
@@ -62,13 +64,20 @@ body {
   color: black;
 }
 
+.kanban-card input[type="text"] {
+  font-size: 16px;
+  border: none;
+  outline: none;
+}
+
 .card-buttons {
   display: flex;
   gap: 5px;
 }
 
 .edit-button,
-.delete-button {
+.delete-button,
+.complete-button {
   color: white;
   border: none;
   border-radius: 4px;
@@ -89,9 +98,13 @@ body {
   background-color: #f05c5c;
 }
 
+.complete-button {
+  background-color: #4caf50;
+}
+
 .kanban-column.to-do {
   position: relative;
-  background-color: #afd7ff;
+  background-color: #cae4fd;
 }
 
 .kanban-column.in-progress {
@@ -111,6 +124,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 25px;
 }
 
 .add-task-button {
@@ -126,7 +140,9 @@ body {
   font-size: 40px;
   cursor: pointer;
   text-align: center;
-  bottom: 24px;
+  bottom: 20px;
+  z-index: 99;
+  border: none;
 }
 
 .add-task input {
@@ -136,7 +152,7 @@ body {
 
 @media (max-width: 1200px) and (min-width: 601px) {
   .kanban-column {
-    width: 30%;
+    width: 24%;
     margin-bottom: 15px;
     min-height: 320px;
   }
@@ -148,17 +164,29 @@ body {
     font-size: 14px;
   }
 
+  .kanban-card input[type="text"] {
+    width: 80%;
+    font-size: 13px;
+    border: none;
+    outline: none;
+  }
+
   .kanban-column h2 {
     font-size: 20px;
     margin-bottom: 25px;
   }
 
   .edit-button,
-  .delete-button {
-    padding: 1px 7px;
+  .delete-button,
+  .complete-button {
+    padding: 1px 6px;
     font-size: 10px;
     height: 23px;
-    margin-right: -3px;
+    margin-right: -2px;
+  }
+
+  .add-task {
+    margin-bottom: 15px;
   }
 
   .add-task-button {
@@ -188,11 +216,11 @@ body {
   }
 
   .edit-button,
-  .delete-button {
+  .delete-button,
+  .complete-button {
     padding: 3px 5px;
     font-size: 8px;
     height: 16px;
-    margin-right: -4px;
   }
 
   .add-task-button {
