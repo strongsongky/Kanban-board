@@ -23,7 +23,10 @@ const KanbanBoard = () => {
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [tasks, setTasks] = useState({});
   const [columns, setColumns] = useState({});
-  const inputRef = useRef(null);
+  const [editingTaskId, setEditingTaskId] = useState(null);
+  const [editingTaskTitle, setEditingTaskTitle] = useState("");
+  const addInputRef = useRef(null); // 추가할 때 사용하는 input의 ref
+  const editInputRef = useRef(null); // 수정할 때 사용하는 input의 ref
 
   useEffect(() => {
     if (data) {
@@ -72,11 +75,19 @@ const KanbanBoard = () => {
     }
   }, [data]);
 
+  // isAdding 상태 변경 시, input에 포커스를 줌
   useEffect(() => {
-    if (isAdding && inputRef.current) {
-      inputRef.current.focus();
+    if (isAdding && addInputRef.current) {
+      addInputRef.current.focus();
     }
   }, [isAdding]);
+
+  // editingTaskId가 변경될 때 input에 포커스를 줌
+  useEffect(() => {
+    if (editingTaskId && editInputRef.current) {
+      editInputRef.current.focus();
+    }
+  }, [editingTaskId]);
 
   if (isLoading) return <div>잠시만 기다려주세요...</div>;
   if (error) return <div>문제가 발생했습니다.</div>;
@@ -112,6 +123,40 @@ const KanbanBoard = () => {
     }
   };
 
+  const handleEditClick = (taskId) => {
+    setEditingTaskId(taskId);
+    setEditingTaskTitle(tasks[taskId].content);
+  };
+
+  const handleSaveEdit = () => {
+    if (editingTaskTitle.trim() !== "") {
+      const updatedTasks = {
+        ...tasks,
+        [editingTaskId]: {
+          ...tasks[editingTaskId],
+          content: editingTaskTitle,
+        },
+      };
+      setTasks(updatedTasks);
+      setEditingTaskId(null);
+      setEditingTaskTitle("");
+    }
+  };
+
+  const handleDeleteClick = (taskId) => {
+    const updatedTasks = { ...tasks };
+    delete updatedTasks[taskId];
+
+    const updatedColumns = { ...columns };
+    for (const columnId in updatedColumns) {
+      const column = updatedColumns[columnId];
+      column.taskIds = column.taskIds.filter((id) => id !== taskId);
+    }
+
+    setTasks(updatedTasks);
+    setColumns(updatedColumns);
+  };
+
   return (
     <div className="kanban-container">
       <h1 className="kanban-title">To-do List ✅</h1>
@@ -130,15 +175,43 @@ const KanbanBoard = () => {
               <h2>{column.title}</h2>
               {columnTasks.map((task) => (
                 <div className="kanban-card" key={task.id}>
-                  {task.content}
-                  <div className="card-buttons">
-                    <button className="edit-button">
-                      <FaEdit />
-                    </button>
-                    <button className="delete-button">
-                      <FaTrash />
-                    </button>
-                  </div>
+                  {editingTaskId === task.id ? (
+                    <div>
+                      <input
+                        type="text"
+                        value={editingTaskTitle}
+                        onChange={(e) => setEditingTaskTitle(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") handleSaveEdit();
+                        }}
+                        ref={editInputRef} // 수정 입력 필드에 ref 연결
+                      />
+                      <button
+                        onClick={handleSaveEdit}
+                        className="complete-button"
+                      >
+                        <FaCheck />
+                      </button>
+                    </div>
+                  ) : (
+                    <div>
+                      {task.content}
+                      <div className="card-buttons">
+                        <button
+                          className="edit-button"
+                          onClick={() => handleEditClick(task.id)}
+                        >
+                          <FaEdit />
+                        </button>
+                        <button
+                          className="delete-button"
+                          onClick={() => handleDeleteClick(task.id)}
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
               {columnId === "column-1" && isAdding && (
@@ -149,7 +222,7 @@ const KanbanBoard = () => {
                     onChange={(e) => setNewTaskTitle(e.target.value)}
                     placeholder="내용을 입력해 주세요"
                     onKeyDown={handleKeyDown}
-                    ref={inputRef}
+                    ref={addInputRef} // 추가 입력 필드에 ref 연결
                   />
                   <div className="card-buttons">
                     <button className="complete-button" onClick={handleAddTask}>

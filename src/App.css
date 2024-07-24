@@ -38,7 +38,6 @@ body {
   padding-bottom: 80px;
   box-sizing: border-box;
   margin-right: 15px;
-  min-height: 400px;
   position: relative;
 }
 
@@ -64,15 +63,23 @@ body {
   color: black;
 }
 
+.kanban-card > div {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
 .kanban-card input[type="text"] {
   font-size: 16px;
   border: none;
   outline: none;
+  flex-grow: 1;
 }
 
 .card-buttons {
   display: flex;
   gap: 5px;
+  margin-left: auto;
 }
 
 .edit-button,
@@ -100,6 +107,7 @@ body {
 
 .complete-button {
   background-color: #4caf50;
+  margin-left: auto;
 }
 
 .kanban-column.to-do {
@@ -154,13 +162,11 @@ body {
   .kanban-column {
     width: 24%;
     margin-bottom: 15px;
-    min-height: 320px;
   }
 
   .kanban-card {
     margin: 12px 0;
     padding: 8px;
-    height: 24px;
     font-size: 14px;
   }
 
