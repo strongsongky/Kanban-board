@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
-import api from "./api/api";
+import api from "../api/api";
 import { FaEdit, FaTrash, FaCheck } from "react-icons/fa";
-import "./App.css";
+import "../App.css";
 
 const fetchTasks = async () => {
   const { data } = await api.get("/todos");
@@ -25,8 +25,8 @@ const KanbanBoard = () => {
   const [columns, setColumns] = useState({});
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [editingTaskTitle, setEditingTaskTitle] = useState("");
-  const addInputRef = useRef(null); // 추가할 때 사용하는 input의 ref
-  const editInputRef = useRef(null); // 수정할 때 사용하는 input의 ref
+  const addInputRef = useRef(null);
+  const editInputRef = useRef(null);
 
   useEffect(() => {
     if (data) {
@@ -75,14 +75,12 @@ const KanbanBoard = () => {
     }
   }, [data]);
 
-  // isAdding 상태 변경 시, input에 포커스를 줌
   useEffect(() => {
     if (isAdding && addInputRef.current) {
       addInputRef.current.focus();
     }
   }, [isAdding]);
 
-  // editingTaskId가 변경될 때 input에 포커스를 줌
   useEffect(() => {
     if (editingTaskId && editInputRef.current) {
       editInputRef.current.focus();
@@ -184,7 +182,7 @@ const KanbanBoard = () => {
                         onKeyDown={(e) => {
                           if (e.key === "Enter") handleSaveEdit();
                         }}
-                        ref={editInputRef} // 수정 입력 필드에 ref 연결
+                        ref={editInputRef}
                       />
                       <button
                         onClick={handleSaveEdit}
@@ -222,7 +220,7 @@ const KanbanBoard = () => {
                     onChange={(e) => setNewTaskTitle(e.target.value)}
                     placeholder="내용을 입력해 주세요"
                     onKeyDown={handleKeyDown}
-                    ref={addInputRef} // 추가 입력 필드에 ref 연결
+                    ref={addInputRef}
                   />
                   <div className="card-buttons">
                     <button className="complete-button" onClick={handleAddTask}>
