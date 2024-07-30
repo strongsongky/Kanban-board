@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import api from "../api/api";
-import { FaEdit, FaTrash, FaCheck } from "react-icons/fa";
+import Column from "./Column";
 import "../App.css";
 
 const fetchTasks = async () => {
@@ -126,6 +126,10 @@ const KanbanBoard = () => {
     setEditingTaskTitle(tasks[taskId].content);
   };
 
+  const handleEditTitleChange = (e) => {
+    setEditingTaskTitle(e.target.value);
+  };
+
   const handleSaveEdit = () => {
     if (editingTaskTitle.trim() !== "") {
       const updatedTasks = {
@@ -161,85 +165,26 @@ const KanbanBoard = () => {
       <div className="kanban-board">
         {Object.keys(columns).map((columnId) => {
           const column = columns[columnId];
-          const columnTasks = column.taskIds.map((taskId) => tasks[taskId]);
 
           return (
-            <div
-              className={`kanban-column ${column.title
-                .toLowerCase()
-                .replace(" ", "-")}`}
+            <Column
               key={column.id}
-            >
-              <h2>{column.title}</h2>
-              {columnTasks.map((task) => (
-                <div className="kanban-card" key={task.id}>
-                  {editingTaskId === task.id ? (
-                    <div>
-                      <input
-                        type="text"
-                        value={editingTaskTitle}
-                        onChange={(e) => setEditingTaskTitle(e.target.value)}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") handleSaveEdit();
-                        }}
-                        ref={editInputRef}
-                      />
-                      <button
-                        onClick={handleSaveEdit}
-                        className="complete-button"
-                      >
-                        <FaCheck />
-                      </button>
-                    </div>
-                  ) : (
-                    <div>
-                      {task.content}
-                      <div className="card-buttons">
-                        <button
-                          className="edit-button"
-                          onClick={() => handleEditClick(task.id)}
-                        >
-                          <FaEdit />
-                        </button>
-                        <button
-                          className="delete-button"
-                          onClick={() => handleDeleteClick(task.id)}
-                        >
-                          <FaTrash />
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-              {columnId === "column-1" && isAdding && (
-                <div className="kanban-card">
-                  <input
-                    type="text"
-                    value={newTaskTitle}
-                    onChange={(e) => setNewTaskTitle(e.target.value)}
-                    placeholder="내용을 입력해 주세요"
-                    onKeyDown={handleKeyDown}
-                    ref={addInputRef}
-                  />
-                  <div className="card-buttons">
-                    <button className="complete-button" onClick={handleAddTask}>
-                      <FaCheck />
-                    </button>
-                  </div>
-                </div>
-              )}
-              {columnId === "column-1" && (
-                <div className="add-task">
-                  <button
-                    className="add-task-button"
-                    onClick={handleAddButtonClick}
-                  >
-                    {isAdding ? "+" : "+"}
-                  </button>
-                </div>
-              )}
-            </div>
+              column={column}
+              tasks={tasks}
+              isAdding={isAdding}
+              newTaskTitle={newTaskTitle}
+              onAddTaskClick={handleAddButtonClick}
+              onNewTaskTitleChange={(e) => setNewTaskTitle(e.target.value)}
+              onAddTask={handleAddTask}
+              onEditClick={handleEditClick}
+              onSaveEdit={handleSaveEdit}
+              onDeleteClick={handleDeleteClick}
+              editingTaskId={editingTaskId}
+              editingTaskTitle={editingTaskTitle}
+              onEditTitleChange={handleEditTitleChange}
+              editInputRef={editInputRef}
+              addInputRef={addInputRef}
+            />
           );
         })}
       </div>
