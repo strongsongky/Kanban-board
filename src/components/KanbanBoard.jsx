@@ -91,26 +91,24 @@ const KanbanBoard = () => {
   if (error) return <div>문제가 발생했습니다.</div>;
 
   const handleAddTask = () => {
-    if (newTaskTitle.trim() !== "") {
-      const newTaskId = `temp-${Date.now()}`;
-      const updatedTasks = {
-        ...tasks,
-        [newTaskId]: { id: newTaskId, content: newTaskTitle },
-      };
-      const updatedColumns = { ...columns };
-      updatedColumns["column-1"].taskIds.push(newTaskId);
-
-      setTasks(updatedTasks);
-      setColumns(updatedColumns);
-      setNewTaskTitle("");
-      setIsAdding(false);
+    if (newTaskTitle.trim() === "") {
+      alert("내용을 입력해 주세요");
+      addInputRef.current.focus();
+      return;
     }
-  };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      handleAddTask();
-    }
+    const newTaskId = `temp-${Date.now()}`;
+    const updatedTasks = {
+      ...tasks,
+      [newTaskId]: { id: newTaskId, content: newTaskTitle },
+    };
+    const updatedColumns = { ...columns };
+    updatedColumns["column-1"].taskIds.push(newTaskId);
+
+    setTasks(updatedTasks);
+    setColumns(updatedColumns);
+    setNewTaskTitle("");
+    setIsAdding(false);
   };
 
   const handleAddButtonClick = () => {
