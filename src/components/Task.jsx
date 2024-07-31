@@ -11,7 +11,11 @@ const EditInput = React.forwardRef(
         onKeyDown={onKeyDown}
         ref={ref}
       />
-      <button onClick={onSaveEdit} className="complete-button">
+      <button
+        onClick={onSaveEdit}
+        className="complete-button"
+        aria-label="Complete Task"
+      >
         <FaCheck />
       </button>
     </div>

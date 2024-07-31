@@ -58,8 +58,12 @@ const Column = ({
       )}
       {column.id === "column-1" && (
         <div className="add-task">
-          <button className="add-task-button" onClick={onAddTaskClick}>
-            {isAdding ? "+" : "+"}
+          <button
+            aria-label="Add Task"
+            className="add-task-button"
+            onClick={onAddTaskClick}
+          >
+            +
           </button>
         </div>
       )}
