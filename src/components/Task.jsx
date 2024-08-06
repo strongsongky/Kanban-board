@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { FaEdit, FaTrash, FaCheck } from "react-icons/fa";
+import { Draggable } from "react-beautiful-dnd";
 
 const EditInput = React.forwardRef(
   ({ value, onChange, onSaveEdit, onKeyDown }, ref) => (
@@ -41,6 +42,7 @@ const Task = ({
   onSaveEdit,
   onDeleteClick,
   onEditTitleChange,
+  index,
 }) => {
   const localInputRef = useRef(null);
 
@@ -51,29 +53,39 @@ const Task = ({
   }, [isEditing]);
 
   if (!task) return null;
+
   return (
-    <div className="kanban-card">
-      {isEditing ? (
-        <EditInput
-          value={editingTaskTitle}
-          onChange={onEditTitleChange}
-          onSaveEdit={onSaveEdit}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") onSaveEdit();
-          }}
-          ref={localInputRef}
-        />
-      ) : (
-        <div>
-          {task.content}
-          <ActionButtons
-            onEditClick={onEditClick}
-            onDeleteClick={onDeleteClick}
-            taskId={task.id}
-          />
+    <Draggable draggableId={task.id} index={index}>
+      {(provided) => (
+        <div
+          className="kanban-card"
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+          {isEditing ? (
+            <EditInput
+              value={editingTaskTitle}
+              onChange={onEditTitleChange}
+              onSaveEdit={onSaveEdit}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") onSaveEdit();
+              }}
+              ref={localInputRef}
+            />
+          ) : (
+            <div>
+              {task.content}
+              <ActionButtons
+                onEditClick={onEditClick}
+                onDeleteClick={onDeleteClick}
+                taskId={task.id}
+              />
+            </div>
+          )}
         </div>
       )}
-    </div>
+    </Draggable>
   );
 };
 

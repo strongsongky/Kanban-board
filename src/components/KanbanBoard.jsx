@@ -2,12 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import api from "../api/api";
 import Column from "./Column";
+import { DragDropContext } from "react-beautiful-dnd";
 import "../App.css";
 
 const fetchTasks = async () => {
   const { data } = await api.get("/todos");
   const modifiedData = data.map((task, index) => ({
     ...task,
+    id: `task-${index}`,
     title: `임시 데이터 ${index + 1}`,
   }));
   return modifiedData;
@@ -157,36 +159,94 @@ const KanbanBoard = () => {
     setColumns(updatedColumns);
   };
 
-  return (
-    <div className="kanban-container">
-      <h1 className="kanban-title">To-do List ✅</h1>
-      <div className="kanban-board">
-        {Object.keys(columns).map((columnId) => {
-          const column = columns[columnId];
+  const onDragEnd = (result) => {
+    const { destination, source, draggableId } = result;
 
-          return (
-            <Column
-              key={column.id}
-              column={column}
-              tasks={tasks}
-              isAdding={isAdding}
-              newTaskTitle={newTaskTitle}
-              onAddTaskClick={handleAddButtonClick}
-              onNewTaskTitleChange={(e) => setNewTaskTitle(e.target.value)}
-              onAddTask={handleAddTask}
-              onEditClick={handleEditClick}
-              onSaveEdit={handleSaveEdit}
-              onDeleteClick={handleDeleteClick}
-              editingTaskId={editingTaskId}
-              editingTaskTitle={editingTaskTitle}
-              onEditTitleChange={handleEditTitleChange}
-              editInputRef={editInputRef}
-              addInputRef={addInputRef}
-            />
-          );
-        })}
+    if (
+      !destination ||
+      (destination.droppableId === source.droppableId &&
+        destination.index === source.index)
+    ) {
+      return;
+    }
+
+    const start = columns[source.droppableId];
+    const finish = columns[destination.droppableId];
+
+    if (start === finish) {
+      const newTaskIds = Array.from(start.taskIds);
+      newTaskIds.splice(source.index, 1);
+      newTaskIds.splice(destination.index, 0, draggableId);
+
+      const newColumn = {
+        ...start,
+        taskIds: newTaskIds,
+      };
+
+      const newColumns = {
+        ...columns,
+        [newColumn.id]: newColumn,
+      };
+
+      setColumns(newColumns);
+      return;
+    }
+
+    const startTaskIds = Array.from(start.taskIds);
+    startTaskIds.splice(source.index, 1);
+    const newStart = {
+      ...start,
+      taskIds: startTaskIds,
+    };
+
+    const finishTaskIds = Array.from(finish.taskIds);
+    finishTaskIds.splice(destination.index, 0, draggableId);
+    const newFinish = {
+      ...finish,
+      taskIds: finishTaskIds,
+    };
+
+    const newColumns = {
+      ...columns,
+      [newStart.id]: newStart,
+      [newFinish.id]: newFinish,
+    };
+
+    setColumns(newColumns);
+  };
+
+  return (
+    <DragDropContext onDragEnd={onDragEnd}>
+      <div className="kanban-container">
+        <h1 className="kanban-title">To-do List ✅</h1>
+        <div className="kanban-board">
+          {Object.keys(columns).map((columnId) => {
+            const column = columns[columnId];
+
+            return (
+              <Column
+                key={column.id}
+                column={column}
+                tasks={tasks}
+                isAdding={isAdding}
+                newTaskTitle={newTaskTitle}
+                onAddTaskClick={handleAddButtonClick}
+                onNewTaskTitleChange={(e) => setNewTaskTitle(e.target.value)}
+                onAddTask={handleAddTask}
+                onEditClick={handleEditClick}
+                onSaveEdit={handleSaveEdit}
+                onDeleteClick={handleDeleteClick}
+                editingTaskId={editingTaskId}
+                editingTaskTitle={editingTaskTitle}
+                onEditTitleChange={handleEditTitleChange}
+                editInputRef={editInputRef}
+                addInputRef={addInputRef}
+              />
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </DragDropContext>
   );
 };
 

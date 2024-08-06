@@ -1,6 +1,7 @@
 import React from "react";
 import Task from "./Task";
 import AddTask from "./AddTask";
+import { Droppable } from "react-beautiful-dnd";
 
 const Column = ({
   column,
@@ -21,52 +22,62 @@ const Column = ({
 }) => {
   return (
     <div
-      className={`kanban-column ${column.title
-        .toLowerCase()
-        .replace(" ", "-")}`}
+      className={`kanban-column ${column.title.toLowerCase().replace(" ", "-")}`}
     >
       <h2>{column.title}</h2>
-      {column.taskIds.map((taskId) => {
-        const task = tasks[taskId];
-        if (!task) {
-          return null;
-        }
-
-        const isEditing = editingTaskId === task.id;
-
-        return (
-          <Task
-            key={task.id}
-            task={task}
-            isEditing={isEditing}
-            editingTaskTitle={editingTaskTitle}
-            onEditClick={onEditClick}
-            onSaveEdit={onSaveEdit}
-            onDeleteClick={onDeleteClick}
-            onEditTitleChange={onEditTitleChange}
-            editInputRef={editInputRef}
-          />
-        );
-      })}
-      {column.id === "column-1" && isAdding && (
-        <AddTask
-          newTaskTitle={newTaskTitle}
-          onNewTaskTitleChange={onNewTaskTitleChange}
-          onAddTask={onAddTask}
-          addInputRef={addInputRef}
-        />
-      )}
-      {column.id === "column-1" && (
-        <div className="add-task">
-          <button
-            aria-label="Add Task"
-            className="add-task-button"
-            onClick={onAddTaskClick}
+      <Droppable droppableId={column.id}>
+        {(provided, snapshot) => (
+          <div
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            className={`droppable-area ${snapshot.isDraggingOver ? "dragging-over" : ""}`}
           >
-            +
-          </button>
-        </div>
-      )}
+            {column.taskIds.map((taskId, index) => {
+              const task = tasks[taskId];
+              if (!task) {
+                return null;
+              }
+
+              const isEditing = editingTaskId === task.id;
+
+              return (
+                <Task
+                  key={task.id}
+                  task={task}
+                  isEditing={isEditing}
+                  editingTaskTitle={editingTaskTitle}
+                  onEditClick={onEditClick}
+                  onSaveEdit={onSaveEdit}
+                  onDeleteClick={onDeleteClick}
+                  onEditTitleChange={onEditTitleChange}
+                  editInputRef={editInputRef}
+                  index={index}
+                />
+              );
+            })}
+            {provided.placeholder}
+            {column.id === "column-1" && isAdding && (
+              <AddTask
+                newTaskTitle={newTaskTitle}
+                onNewTaskTitleChange={onNewTaskTitleChange}
+                onAddTask={onAddTask}
+                addInputRef={addInputRef}
+              />
+            )}
+            {column.id === "column-1" && (
+              <div className="add-task">
+                <button
+                  aria-label="Add Task"
+                  className="add-task-button"
+                  onClick={onAddTaskClick}
+                >
+                  +
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+      </Droppable>
     </div>
   );
 };
