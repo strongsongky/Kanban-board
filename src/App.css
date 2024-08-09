@@ -29,17 +29,19 @@ body {
   padding: 20px;
   overflow-x: auto;
   width: 100%;
+  align-items: flex-start;
 }
 
 .kanban-column {
+  display: flex;
+  flex-direction: column;
   border-radius: 10px;
-  min-height: 410px;
   width: 23%;
   padding: 10px;
-  padding-bottom: 80px;
   box-sizing: border-box;
   margin-right: 15px;
   position: relative;
+  min-height: 410px;
 }
 
 .kanban-column:last-child {
@@ -75,6 +77,10 @@ body {
   border: none;
   outline: none;
   flex-grow: 1;
+}
+
+.kanban-card:last-child {
+  margin-bottom: 20px;
 }
 
 .card-buttons {
@@ -114,10 +120,11 @@ body {
 .kanban-column.to-do {
   position: relative;
   background-color: #cae4fd;
+  padding-bottom: 90px;
 }
 
 .kanban-column.in-progress {
-  background-color: #afd7ff;
+  background-color: #a6d0fa;
 }
 
 .kanban-column.on-hold {
@@ -127,6 +134,22 @@ body {
 .kanban-column.done {
   background-color: #4089d1;
   color: white;
+}
+
+.kanban-column.dragging-over.to-do {
+  background-color: #a3c8fd;
+}
+
+.kanban-column.dragging-over.in-progress {
+  background-color: #082340;
+}
+
+.kanban-column.dragging-over.on-hold {
+  background-color: #e6b923;
+}
+
+.kanban-column.dragging-over.done {
+  background-color: #da7719;
 }
 
 .add-task {
@@ -150,7 +173,7 @@ body {
   cursor: pointer;
   text-align: center;
   bottom: 30px;
-  z-index: 99;
+  z-index: 1;
   border: none;
 }
 
@@ -160,13 +183,21 @@ body {
 }
 
 .droppable-area {
-  min-height: 100%;
+  flex-grow: 1;
+}
+
+.droppable-area.dragging-over {
+  background-color: #0a0a0a;
 }
 
 @media (max-width: 1200px) and (min-width: 601px) {
   .kanban-column {
-    min-height: 320px;
+    min-height: 310px;
     width: 24%;
+  }
+
+  .kanban-column.to-do {
+    padding-bottom: 70px;
   }
 
   .kanban-card {
@@ -184,7 +215,8 @@ body {
 
   .kanban-column h2 {
     font-size: 20px;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
+    margin-top: 15px;
   }
 
   .edit-button,
@@ -241,4 +273,3 @@ body {
     font-size: 18px;
   }
 }
-

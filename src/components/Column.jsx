@@ -21,17 +21,17 @@ const Column = ({
   addInputRef,
 }) => {
   return (
-    <div
-      className={`kanban-column ${column.title.toLowerCase().replace(" ", "-")}`}
-    >
-      <h2>{column.title}</h2>
-      <Droppable droppableId={column.id}>
-        {(provided, snapshot) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-            className={`droppable-area ${snapshot.isDraggingOver ? "dragging-over" : ""}`}
-          >
+    <Droppable droppableId={column.id}>
+      {(provided, snapshot) => (
+        <div
+          className={`kanban-column ${column.title.toLowerCase().replace(" ", "-")} ${
+            snapshot.isDraggingOver ? "dragging-over" : ""
+          }`}
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+        >
+          <h2>{column.title}</h2>
+          <div className="droppable-area">
             {column.taskIds.map((taskId, index) => {
               const task = tasks[taskId];
               if (!task) {
@@ -76,9 +76,9 @@ const Column = ({
               </div>
             )}
           </div>
-        )}
-      </Droppable>
-    </div>
+        </div>
+      )}
+    </Droppable>
   );
 };
 
