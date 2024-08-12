@@ -137,19 +137,19 @@ body {
 }
 
 .kanban-column.dragging-over.to-do {
-  background-color: #a3c8fd;
+  background-color: #a0d1ff;
 }
 
 .kanban-column.dragging-over.in-progress {
-  background-color: #082340;
+  background-color: #78bafb;
 }
 
 .kanban-column.dragging-over.on-hold {
-  background-color: #e6b923;
+  background-color: #f4ee36;
 }
 
 .kanban-column.dragging-over.done {
-  background-color: #da7719;
+  background-color: #0972da;
 }
 
 .add-task {
