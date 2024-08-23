@@ -9,22 +9,28 @@
 <img alt="axios" src ="https://img.shields.io/badge/axios-5A29E4.svg?&style=for-the-badge&logo=axios&logoColor=white"/> <img alt="testinglibrary" src ="https://img.shields.io/badge/testinglibrary-E33332.svg?&style=for-the-badge&logo=testinglibrary&logoColor=white"/> <img alt="jest" src ="https://img.shields.io/badge/jest-C21325.svg?&style=for-the-badge&logo=jest&logoColor=white"/>
 
 #### [ 결과물 ]
-- 기본 화면 (반응형)
+- #### 기본 화면 (반응형)
 <img width="1728" alt="스크린샷 2024-08-12 오후 4 25 51" src="https://github.com/user-attachments/assets/0f0f81a9-bd3a-48d3-8d01-1dc069260f2e">
-<img width="564" height="650" alt="스크린샷 2024-08-12 오후 4 25 23" src="https://github.com/user-attachments/assets/68ddf603-0390-4813-b180-6b65208fe64c">   <img width="400" height="650" alt="스크린샷 2024-08-12 오후 4 36 13" src="https://github.com/user-attachments/assets/55e3abc4-7d82-4ad7-9516-0fa53b24351f"></br></br>
+<img width="1728" alt="스크린샷 2024-08-23 오후 5 30 08" src="https://github.com/user-attachments/assets/b9f6797d-8b3e-4fb0-8579-fd75fe69af88">
+<img width="1728" alt="스크린샷 2024-08-23 오후 5 34 41" src="https://github.com/user-attachments/assets/474d14a2-8ed3-4b01-8acc-7d9371e31829">
 
-- 카드 추가 / 수정 / 삭제
+- #### 카드 추가 / 수정 / 삭제
+
+![Aug-23-2024 16-57-48](https://github.com/user-attachments/assets/406a7eaf-bf3a-4960-9f3a-47fd95e2d6ac)
+↑ 추가 버튼(+) 클릭하면 자동으로 input칸에 포커스 됨. 할 일 입력 후 엔터키 또는 확인 버튼을 눌러 추가</br>
+
+![Aug-23-2024 17-53-43](https://github.com/user-attachments/assets/0b6338cd-1aec-465d-a482-1995c7fda976)</br>
+↑ 수정 / 삭제 및 카드 순서 변경
+
+- #### 드래그 앤 드랍
   
-<img width="1728" alt="스크린샷 2024-05-30 오후 5 14 52" src="https://github.com/strongsongky/online-timer/assets/102295416/89763762-f22e-4f52-a657-2a180ccb0837"></br>
+![Aug-23-2024 18-11-53](https://github.com/user-attachments/assets/5d0b70a3-5508-4151-9f88-f1c8008ecfa2)
+↑ 해당 칼럼으로 카드 이동 시 배경 색깔이 변하며 사용자가 알 수 있도록 함
 
-- 드래그 앤 드랍 (배경 색 변화로 사용자~~)
-  
-<img width="1728" alt="스크린샷 2024-05-30 오후 5 16 08" src="https://github.com/strongsongky/online-timer/assets/102295416/0cb4db2c-e847-4a1f-9089-8ad65f9140a5">
+- #### 로딩 화면 메세지 / 빈칸 입력 에러메세지
 
-↑ 알람 시간으로 설정한 시간과 남은 시간을 표시. 취소 버튼 클릭 시 초기화</br>
+<img width="500" alt="스크린샷 2024-08-23 오후 6 16 04" src="https://github.com/user-attachments/assets/5c78414d-ce73-4df0-a1a1-6ccc45ff1d52"> <img width="500" alt="스크린샷 2024-08-23 오후 6 16 19" src="https://github.com/user-attachments/assets/f901a575-71a6-4f05-b139-2f6d8f5eab75"></br>
+↑ 로딩 화면 및 로딩 실패 시 메시지 구현</br></br>
 
-- 빈칸 입력 에러메세지 / 로딩 화면 메세지
-
-<img width="550" height="500" alt="스크린샷 2024-05-30 오후 5 17 50" src="https://github.com/strongsongky/online-timer/assets/102295416/5b533541-17ef-4368-9cff-47045f91bf07"></br>
-
-↑ 알람 시간을 설정하지 않고 시작 버튼 클릭 시 에러 메시지 구현
+![Aug-23-2024 18-24-28](https://github.com/user-attachments/assets/074f3029-2b09-4df7-8dd6-ce14aaedc770)
+↑ 내용을 입력하지 않고 추가 버튼 클릭 시 에러 메시지 구현
